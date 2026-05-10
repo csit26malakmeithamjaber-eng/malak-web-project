@@ -1,77 +1,206 @@
-import flet as ft
-import random
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مشروع البرمجة الاحترافي</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #6366f1;
+            --secondary-color: #a855f7;
+            --bg-dark: #0f172a;
+            --text-light: #f8fafc;
+        }
 
-def main(page: ft.Page):
-    page.title = "Creative Hub Project"
-    page.theme_mode = ft.ThemeMode.DARK
-    page.window_width = 450
-    page.window_height = 800
-    page.scroll = "auto"
-    page.padding = 20
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+            scroll-behavior: smooth;
+        }
 
-    # دالة معالجة الأفكار الخمسة
-    def run_logic(feature):
-        text = user_input.value
-        if not text:
-            result_area.value = "⚠️ الرجاء كتابة شيء في الحقل أولاً!"
-            page.update()
-            return
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
 
-        if feature == "1": # Persona
-            res = f"👤 تحليل الشخصية لـ ({text}):\nأنت تملك طاقة إبداعية عالية، شخصيتك تشبه المحاربين القدامى بعقلية تكنولوجية حديثة."
-        elif feature == "2": # Dream
-            res = f"🌙 تفسير الحلم:\nرؤيتك لـ ({text}) تدل على طموح كبير يسعى للخروج من حيز التفكير إلى التنفيذ."
-        elif feature == "3": # Future
-            res = f"✉️ رسالة من مستقبلك:\n'يا {text}، أنا فخور بك لأنك لم تستسلم في 2026. نحن الآن نعيش النجاح!'"
-        elif feature == "4": # Aesthetic
-            res = f"🎨 هويتك البصرية:\nبناءً على ({text})، ذوقك يميل للنمط (Cyberpunk) مع لمسات كلاسيكية هادئة."
-        elif feature == "5": # Chaos
-            scenes = ["مدينة طافية فوق السحاب", "مكتبة ضائعة في ثقب أسود", "غابة من الأسلاك المضيئة"]
-            res = f"🎲 مشهد عشوائي:\n{random.choice(scenes)} حيث يوجد {text}."
-        
-        result_area.value = res
-        page.update()
+        /* خلفية متحركة بسيطة */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 50%, #1e293b 0%, #0f172a 100%);
+            z-index: -1;
+        }
 
-    # عناصر الواجهة
-    user_input = ft.TextField(
-        label="اكتب فكرتك أو اسمك هنا",
-        border_color="blue",
-        text_align="right",
-        border_radius=15
-    )
-    
-    result_area = ft.Text("", color="cyan", size=18, weight="bold", text_align="center")
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0; width: 100%;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
 
-    def btn(title, icon, color, key):
-        return ft.ElevatedButton(
-            content=ft.Row([ft.Icon(icon), ft.Text(title)], alignment="center"),
-            on_click=lambda _: run_logic(key),
-            style=ft.ButtonStyle(color=color, shape=ft.RoundedRectangleBorder(radius=10)),
-            height=50
-        )
+        nav .logo { font-size: 1.5rem; font-weight: 700; color: var(--primary-color); }
 
-    # إضافة العناصر للصفحة
-    page.add(
-        ft.Column([
-            ft.Text("مركز المشاريع الإبداعي", size=28, weight="bold"),
-            ft.Text("ادمج أفكارك الخمسة في مكان واحد", color="grey"),
-            ft.Divider(height=20),
-            user_input,
-            ft.Divider(height=10),
-            btn("توليد الشخصية (Persona)", ft.icons.PERSON, "white", "1"),
-            btn("مفسر الأحلام (Dream)", ft.icons.NIGHTS_STAY, "purple", "2"),
-            btn("رسالة المستقبل (Future)", ft.icons.AUTO_AWESOME, "amber", "3"),
-            btn("الهوية البصرية (Aesthetic)", ft.icons.PALETTE, "green", "4"),
-            btn("المحرك العشوائي (Chaos)", ft.icons.STORM, "red", "5"),
-            ft.Divider(height=30),
-            ft.Container(
-                content=result_area,
-                padding=20,
-                bgcolor=ft.colors.WHITE10,
-                border_radius=15,
-                alignment=ft.alignment.center
-            )
-        ], horizontal_alignment="center")
-    )
+        nav ul { display: flex; list-style: none; }
+        nav ul li { margin-right: 30px; }
+        nav ul li a {
+            text-decoration: none; color: white;
+            font-weight: 500; transition: 0.3s;
+        }
+        nav ul li a:hover { color: var(--secondary-color); }
 
-ft.app(target=main)
+        /* Hero Section */
+        header {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        header h1 {
+            font-size: 4rem;
+            background: linear-gradient(to right, #818cf8, #d946ef);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+
+        header p { font-size: 1.2rem; max-width: 600px; color: #94a3b8; }
+
+        /* Sections General */
+        section { padding: 100px 50px; min-height: 80vh; }
+        h2 { font-size: 2.5rem; text-align: center; margin-bottom: 50px; }
+
+        /* Grid Layout for "Services" or "Features" */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease;
+            text-align: center;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--primary-color);
+        }
+
+        /* Contact Section */
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        input, textarea {
+            padding: 15px;
+            border-radius: 10px;
+            border: none;
+            background: #1e293b;
+            color: white;
+            outline: none;
+        }
+
+        button {
+            padding: 15px;
+            border-radius: 10px;
+            border: none;
+            background: var(--primary-color);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover { background: var(--secondary-color); }
+
+        footer { text-align: center; padding: 40px; border-top: 1px solid rgba(255,255,255,0.1); }
+
+        @media (max-width: 768px) {
+            header h1 { font-size: 2.5rem; }
+            nav { padding: 20px; }
+            nav ul { display: none; } /* لإبقاء الكود بسيطاً */
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">موقعي الإبداعي</div>
+        <ul>
+            <li><a href="#home">الرئيسية</a></li>
+            <li><a href="#about">من نحن</a></li>
+            <li><a href="#services">خدماتنا</a></li>
+            <li><a href="#contact">اتصل بنا</a></li>
+        </ul>
+    </nav>
+
+    <header id="home">
+        <h1>مستقبل تطوير الويب</h1>
+        <p>هذا المشروع يجسد مفهوم الصفحة الواحدة الاحترافية باستخدام أحدث تقنيات التصميم.</p>
+    </header>
+
+    <section id="about">
+        <h2>من نحن</h2>
+        <p style="text-align: center; max-width: 800px; margin: 0 auto;">نحن فريق نؤمن بأن البساطة هي قمة التعقيد. هذا الموقع تم تصميمه ليكون خفيفاً، سريعاً، وجذاباً بصرياً ليناسب معايير الويب الحديثة.</p>
+    </section>
+
+    <section id="services">
+        <h2>خدماتنا</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>تطوير الواجهات</h3>
+                <p>بناء واجهات مستخدم تفاعلية باستخدام HTML5 و CSS3.</p>
+            </div>
+            <div class="card">
+                <h3>تجربة المستخدم</h3>
+                <p>تصميم رحلة مستخدم سلسة تضمن بقاء الزائر لفترة أطول.</p>
+            </div>
+            <div class="card">
+                <h3>الأداء العالي</h3>
+                <p>مواقع سريعة جداً ومتوافقة مع محركات البحث.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2>تواصل معي</h2>
+        <form class="contact-form">
+            <input type="text" placeholder="الاسم الكامل">
+            <input type="email" placeholder="البريد الإلكتروني">
+            <textarea rows="5" placeholder="رسالتك هنا..."></textarea>
+            <button type="button">إرسال الرسالة</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>تم التطوير بكل شغف &copy; 2026</p>
+    </footer>
+
+</body>
+</html>

@@ -2,86 +2,74 @@ import flet as ft
 import random
 
 def main(page: ft.Page):
-    page.title = "Creative Hub - Sonnet 4.6 Ideas"
+    page.title = "Creative Hub Project"
     page.theme_mode = ft.ThemeMode.DARK
-    page.window_width = 400
-    page.window_height = 700
+    page.window_width = 450
+    page.window_height = 800
     page.scroll = "auto"
+    page.padding = 20
 
-    # --- دالة لتوليد الردود (Logic) ---
-    def process_action(e, feature_name, input_val):
-        if not input_val:
-            result_text.value = "الرجاء إدخال نص أولاً!"
-        else:
-            if feature_name == "Persona":
-                result_text.value = f"تم توليد شخصية لـ {input_val}:\nالقوة: التحكم بالزمن\nالعدو: النسيان\nالمصير: بطل مجرة."
-            elif feature_name == "Dream":
-                result_text.value = f"تحليل حلمك ({input_val}):\nالرمز: البحر يمثل الهدوء قبل العاصفة.\nرسالة لك: لا تخف من المجهول."
-            elif feature_name == "Future":
-                result_text.value = f"رسالة من نسخة {input_val} بعد 10 سنين:\n'لقد حققنا الحلم، كل التعب كان يستحق. استمر!'"
-            elif feature_name == "Chaos":
-                scenes = ["مشهد في باريس عام 2099", "حياة بائع كتب في كوكب زحل", "صراع في غابة رقمية"]
-                result_text.value = f"المشهد العشوائي: {random.choice(scenes)}"
+    # دالة معالجة الأفكار الخمسة
+    def run_logic(feature):
+        text = user_input.value
+        if not text:
+            result_area.value = "⚠️ الرجاء كتابة شيء في الحقل أولاً!"
+            page.update()
+            return
+
+        if feature == "1": # Persona
+            res = f"👤 تحليل الشخصية لـ ({text}):\nأنت تملك طاقة إبداعية عالية، شخصيتك تشبه المحاربين القدامى بعقلية تكنولوجية حديثة."
+        elif feature == "2": # Dream
+            res = f"🌙 تفسير الحلم:\nرؤيتك لـ ({text}) تدل على طموح كبير يسعى للخروج من حيز التفكير إلى التنفيذ."
+        elif feature == "3": # Future
+            res = f"✉️ رسالة من مستقبلك:\n'يا {text}، أنا فخور بك لأنك لم تستسلم في 2026. نحن الآن نعيش النجاح!'"
+        elif feature == "4": # Aesthetic
+            res = f"🎨 هويتك البصرية:\nبناءً على ({text})، ذوقك يميل للنمط (Cyberpunk) مع لمسات كلاسيكية هادئة."
+        elif feature == "5": # Chaos
+            scenes = ["مدينة طافية فوق السحاب", "مكتبة ضائعة في ثقب أسود", "غابة من الأسلاك المضيئة"]
+            res = f"🎲 مشهد عشوائي:\n{random.choice(scenes)} حيث يوجد {text}."
         
+        result_area.value = res
         page.update()
 
-    # --- عناصر الواجهة ---
-    result_text = ft.Text(value="", color="gold", italic=True, size=16, text_align="center")
-    user_input = ft.TextField(label="أدخل النص هنا...", border_color="blue", border_radius=10)
+    # عناصر الواجهة
+    user_input = ft.TextField(
+        label="اكتب فكرتك أو اسمك هنا",
+        border_color="blue",
+        text_align="right",
+        border_radius=15
+    )
+    
+    result_area = ft.Text("", color="cyan", size=18, weight="bold", text_align="center")
 
-    def create_feature_card(title, icon, color, feature_key):
-        return ft.Container(
-            content=ft.Column([
-                ft.Icon(icon, color=color, size=30),
-                ft.Text(title, weight="bold"),
-            ], horizontal_alignment="center"),
-            padding=15,
-            bgcolor=ft.colors.with_opacity(0.1, color),
-            border_radius=15,
-            on_click=lambda e: process_action(e, feature_key, user_input.value),
-            expand=True
+    def btn(title, icon, color, key):
+        return ft.ElevatedButton(
+            content=ft.Row([ft.Icon(icon), ft.Text(title)], alignment="center"),
+            on_click=lambda _: run_logic(key),
+            style=ft.ButtonStyle(color=color, shape=ft.RoundedRectangleBorder(radius=10)),
+            height=50
         )
 
-    # --- بناء الواجهة الرئيسية ---
+    # إضافة العناصر للصفحة
     page.add(
         ft.Column([
-            ft.Text("Creative AI Hub", size=30, weight="bold", color="white"),
-            ft.Text("اختر أداة للإبداع", color="grey"),
-            ft.Divider(height=20, color="transparent"),
+            ft.Text("مركز المشاريع الإبداعي", size=28, weight="bold"),
+            ft.Text("ادمج أفكارك الخمسة في مكان واحد", color="grey"),
+            ft.Divider(height=20),
             user_input,
-            ft.Divider(height=20),
-            
-            # الصف الأول من الميزات
-            ft.Row([
-                create_feature_card("Persona", ft.icons.PERSON_ADD, "blue", "Persona"),
-                create_feature_card("Dream Decoder", ft.icons.BEDTIME, "purple", "Dream"),
-            ]),
-            
-            # الصف الثاني
-            ft.Row([
-                create_feature_card("Future Letter", ft.icons.MAIL, "pink", "Future"),
-                create_feature_card("Chaos Engine", ft.icons.AUTO_AWESOME, "orange", "Chaos"),
-            ]),
-            
-            # ميزة Aesthetic DNA (كمثال إضافي)
+            ft.Divider(height=10),
+            btn("توليد الشخصية (Persona)", ft.icons.PERSON, "white", "1"),
+            btn("مفسر الأحلام (Dream)", ft.icons.NIGHTS_STAY, "purple", "2"),
+            btn("رسالة المستقبل (Future)", ft.icons.AUTO_AWESOME, "amber", "3"),
+            btn("الهوية البصرية (Aesthetic)", ft.icons.PALETTE, "green", "4"),
+            btn("المحرك العشوائي (Chaos)", ft.icons.STORM, "red", "5"),
+            ft.Divider(height=30),
             ft.Container(
-                content=ft.Row([
-                    ft.Icon(ft.icons.PALETTE, color="green"),
-                    ft.Text("Aesthetic DNA - تحليل الهوية البصرية", weight="bold")
-                ], alignment="center"),
-                bgcolor=ft.colors.with_opacity(0.1, "green"),
-                padding=15,
-                border_radius=15,
-                on_click=lambda _: print("Aesthetic Analysis Started")
-            ),
-            
-            ft.Divider(height=20),
-            ft.Container(
-                content=result_text,
+                content=result_area,
                 padding=20,
-                border=ft.border.all(1, "grey"),
-                border_radius=10,
-                width=float("inf")
+                bgcolor=ft.colors.WHITE10,
+                border_radius=15,
+                alignment=ft.alignment.center
             )
         ], horizontal_alignment="center")
     )

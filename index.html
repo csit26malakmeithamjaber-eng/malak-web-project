@@ -1,33 +1,89 @@
-import turtle
-import colorsys
+import flet as ft
+import random
 
-# إعداد الشاشة
-screen = turtle.Screen()
-screen.setup(width=800, height=800)
-screen.bgcolor('black')  # خلفية سوداء لإبراز الألوان
-screen.title("لوحة فنية برمجية احترافية")
+def main(page: ft.Page):
+    page.title = "Creative Hub - Sonnet 4.6 Ideas"
+    page.theme_mode = ft.ThemeMode.DARK
+    page.window_width = 400
+    page.window_height = 700
+    page.scroll = "auto"
 
-# إعدادات الرسم
-t = turtle.Turtle()
-t.speed(0)  # أقصى سرعة
-t.width(2)
-t.hideturtle()
+    # --- دالة لتوليد الردود (Logic) ---
+    def process_action(e, feature_name, input_val):
+        if not input_val:
+            result_text.value = "الرجاء إدخال نص أولاً!"
+        else:
+            if feature_name == "Persona":
+                result_text.value = f"تم توليد شخصية لـ {input_val}:\nالقوة: التحكم بالزمن\nالعدو: النسيان\nالمصير: بطل مجرة."
+            elif feature_name == "Dream":
+                result_text.value = f"تحليل حلمك ({input_val}):\nالرمز: البحر يمثل الهدوء قبل العاصفة.\nرسالة لك: لا تخف من المجهول."
+            elif feature_name == "Future":
+                result_text.value = f"رسالة من نسخة {input_val} بعد 10 سنين:\n'لقد حققنا الحلم، كل التعب كان يستحق. استمر!'"
+            elif feature_name == "Chaos":
+                scenes = ["مشهد في باريس عام 2099", "حياة بائع كتب في كوكب زحل", "صراع في غابة رقمية"]
+                result_text.value = f"المشهد العشوائي: {random.choice(scenes)}"
+        
+        page.update()
 
-# المتغيرات الأساسية للفن
-hue = 0.0
-n = 120  # عدد الأضلاع والتكرار
+    # --- عناصر الواجهة ---
+    result_text = ft.Text(value="", color="gold", italic=True, size=16, text_align="center")
+    user_input = ft.TextField(label="أدخل النص هنا...", border_color="blue", border_radius=10)
 
-for i in range(300):
-    # تحويل نظام الألوان من HSV إلى RGB للحصول على تدرج احترافي
-    color = colorsys.hsv_to_rgb(hue, 1, 1)
-    t.pencolor(color)
-    hue += 0.005  # سرعة تغير اللون
-    
-    # الرسم الهندسي غير المتوقع
-    t.forward(i * 2) 
-    t.right(121)    # زاوية الدوران هي السر في شكل الفن
-    t.circle(i, 80) # إضافة انحناءات لتعطي طابعاً فنياً
-    t.left(60)
-    
-# إنهاء الرسم عند النقر
-screen.exitonclick()
+    def create_feature_card(title, icon, color, feature_key):
+        return ft.Container(
+            content=ft.Column([
+                ft.Icon(icon, color=color, size=30),
+                ft.Text(title, weight="bold"),
+            ], horizontal_alignment="center"),
+            padding=15,
+            bgcolor=ft.colors.with_opacity(0.1, color),
+            border_radius=15,
+            on_click=lambda e: process_action(e, feature_key, user_input.value),
+            expand=True
+        )
+
+    # --- بناء الواجهة الرئيسية ---
+    page.add(
+        ft.Column([
+            ft.Text("Creative AI Hub", size=30, weight="bold", color="white"),
+            ft.Text("اختر أداة للإبداع", color="grey"),
+            ft.Divider(height=20, color="transparent"),
+            user_input,
+            ft.Divider(height=20),
+            
+            # الصف الأول من الميزات
+            ft.Row([
+                create_feature_card("Persona", ft.icons.PERSON_ADD, "blue", "Persona"),
+                create_feature_card("Dream Decoder", ft.icons.BEDTIME, "purple", "Dream"),
+            ]),
+            
+            # الصف الثاني
+            ft.Row([
+                create_feature_card("Future Letter", ft.icons.MAIL, "pink", "Future"),
+                create_feature_card("Chaos Engine", ft.icons.AUTO_AWESOME, "orange", "Chaos"),
+            ]),
+            
+            # ميزة Aesthetic DNA (كمثال إضافي)
+            ft.Container(
+                content=ft.Row([
+                    ft.Icon(ft.icons.PALETTE, color="green"),
+                    ft.Text("Aesthetic DNA - تحليل الهوية البصرية", weight="bold")
+                ], alignment="center"),
+                bgcolor=ft.colors.with_opacity(0.1, "green"),
+                padding=15,
+                border_radius=15,
+                on_click=lambda _: print("Aesthetic Analysis Started")
+            ),
+            
+            ft.Divider(height=20),
+            ft.Container(
+                content=result_text,
+                padding=20,
+                border=ft.border.all(1, "grey"),
+                border_radius=10,
+                width=float("inf")
+            )
+        ], horizontal_alignment="center")
+    )
+
+ft.app(target=main)

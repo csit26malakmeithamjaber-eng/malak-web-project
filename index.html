@@ -3,127 +3,217 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vibe Code Professional</title>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;500;800&display=swap" rel="stylesheet">
+    <title>Luxury Art Project</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital@1&family=Tajawal:wght@300;500;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-glow: #6366f1;
-            --secondary-glow: #ff00c8;
-            --bg-color: #05070a;
+            --gold: linear-gradient(45deg, #d4af37, #f9e2af, #b8860b);
+            --gold-solid: #d4af37;
+            --black: #0a0a0a;
+            --glass: rgba(255, 255, 255, 0.05);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; scroll-behavior: smooth; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
 
-        body { background-color: var(--bg-color); color: #fff; overflow-x: hidden; cursor: none; } /* إخفاء الماوس الأصلي */
+        body { background-color: var(--black); color: #fff; overflow-x: hidden; line-height: 1.6; }
 
-        /* 1. تأثير فتح شاشة التلفاز */
+        /* تأثير فتح الشاشة الذهبي */
         .tv-overlay {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background: #000; z-index: 9999; pointer-events: none;
-            animation: tvOpen 1.2s ease-out forwards;
+            animation: tvOpen 1.5s ease-out forwards;
         }
         @keyframes tvOpen {
             0% { height: 100vh; width: 100vw; }
-            40% { height: 2px; width: 100vw; background: #fff; box-shadow: 0 0 20px #fff; }
-            80% { height: 2px; width: 2px; background: #fff; }
+            50% { height: 2px; width: 100vw; background: var(--gold-solid); box-shadow: 0 0 20px var(--gold-solid); }
             100% { height: 0; width: 0; opacity: 0; }
         }
 
-        /* 2. الماوس المضيء المخصص */
+        /* الماوس الذهبي */
         #cursor {
-            width: 20px; height: 20px; background: white; border-radius: 50%;
-            position: fixed; pointer-events: none; z-index: 10000;
-            mix-blend-mode: difference; transition: transform 0.1s;
+            width: 15px; height: 15px; border: 1px solid var(--gold-solid); border-radius: 50%;
+            position: fixed; pointer-events: none; z-index: 10000; transition: transform 0.1s;
         }
 
-        /* 3. خلفية اللمعان المتحركة */
-        .animated-bg {
+        /* الخلفية واللمسات الأنثوية */
+        .bg-glow {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1; background: radial-gradient(circle at 50% 50%, #111827, #05070a);
+            z-index: -1; background: radial-gradient(circle at top right, #1a1a1a, #000);
         }
-        .light-blob {
-            position: absolute; width: 600px; height: 600px;
-            background: var(--primary-glow); filter: blur(150px);
-            border-radius: 50%; opacity: 0.15; animation: move 20s infinite alternate;
+        .glow-dot {
+            position: absolute; width: 2px; height: 2px; background: white; border-radius: 50%;
+            box-shadow: 0 0 10px white; animation: blink 3s infinite;
         }
-        .light-blob.second { background: var(--secondary-glow); left: 50%; animation-duration: 15s; }
-        @keyframes move { from { transform: translate(-10%, -10%); } to { transform: translate(30%, 30%); } }
 
-        /* 4. تصميم المحتوى */
+        @keyframes blink { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+
+        /* Navigation */
         nav {
-            position: fixed; top: 0; width: 100%; padding: 20px 50px;
-            display: flex; justify-content: space-between; align-items: center;
-            backdrop-filter: blur(15px); z-index: 1000; border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding: 25px 10%; display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
         }
-        .logo { font-size: 1.6rem; font-weight: 800; color: var(--primary-glow); }
-        nav ul { display: flex; list-style: none; }
-        nav ul li { margin-right: 25px; }
-        nav ul li a { text-decoration: none; color: #ccc; transition: 0.3s; }
-        nav ul li a:hover { color: #fff; text-shadow: 0 0 10px #fff; }
+        .logo { font-family: 'Amiri', serif; font-size: 2rem; background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
-        header { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-        h1 { font-size: 5rem; background: linear-gradient(to right, #fff, var(--primary-glow)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        /* Header */
+        header { height: 70vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+        h1 { font-family: 'Amiri', serif; font-size: 4.5rem; margin-bottom: 10px; }
+        .gold-line { width: 100px; height: 2px; background: var(--gold); margin: 20px 0; }
 
-        section { padding: 100px 10%; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
-        .card {
-            background: rgba(255,255,255,0.03); padding: 40px; border-radius: 20px;
-            border: 1px solid rgba(255,255,255,0.1); transition: 0.4s;
+        /* Quotes Section */
+        .quotes-container { padding: 60px 10%; text-align: center; background: var(--glass); border-radius: 50px; margin: 40px 10%; border: 1px solid rgba(212, 175, 55, 0.1); }
+        #quote-text { font-family: 'Amiri', serif; font-size: 1.8rem; font-style: italic; min-height: 100px; color: #f9e2af; }
+        .btn-gold {
+            margin-top: 20px; padding: 12px 30px; background: var(--gold); border: none; border-radius: 25px;
+            color: #000; font-weight: bold; cursor: pointer; transition: 0.3s;
         }
-        .card:hover { transform: translateY(-10px); border-color: var(--secondary-glow); box-shadow: 0 0 20px rgba(255,0,200,0.1); }
+        .btn-gold:hover { transform: scale(1.1); box-shadow: 0 0 20px rgba(212, 175, 55, 0.4); }
 
-        footer { text-align: center; padding: 40px; opacity: 0.4; border-top: 1px solid rgba(255,255,255,0.05); }
+        /* Calculator Modal */
+        #calc-btn { position: fixed; bottom: 30px; left: 30px; width: 60px; height: 60px; background: var(--gold); border-radius: 50%; border: none; cursor: pointer; z-index: 1000; font-size: 1.5rem; }
+        #calc-modal {
+            display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            background: rgba(10, 10, 10, 0.95); padding: 20px; border-radius: 20px; border: 1px solid var(--gold-solid); z-index: 2000;
+        }
+        .calc-display { width: 100%; padding: 15px; background: #000; color: var(--gold-solid); text-align: right; margin-bottom: 10px; border: 1px solid #333; font-size: 1.2rem; }
+        .calc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+        .calc-grid button { padding: 15px; border-radius: 10px; border: 1px solid #333; background: #1a1a1a; color: white; cursor: pointer; }
+        .calc-grid button:hover { background: var(--gold-solid); color: black; }
+
+        /* Contact Section */
+        #contact { padding: 80px 10%; text-align: center; }
+        .contact-box { max-width: 600px; margin: 0 auto; background: var(--glass); padding: 40px; border-radius: 30px; border-top: 3px solid var(--gold-solid); }
+        input, textarea { width: 100%; padding: 15px; margin-bottom: 15px; background: transparent; border: 1px solid #333; color: white; border-radius: 10px; outline: none; }
+        input:focus { border-color: var(--gold-solid); }
+
+        footer { padding: 40px; text-align: center; opacity: 0.5; font-size: 0.8rem; letter-spacing: 2px; }
     </style>
 </head>
 <body>
 
     <div class="tv-overlay"></div>
     <div id="cursor"></div>
-
-    <div class="animated-bg">
-        <div class="light-blob"></div>
-        <div class="light-blob second"></div>
-    </div>
+    <div class="bg-glow"></div>
 
     <nav>
-        <div class="logo">VIBE CODE</div>
-        <ul>
-            <li><a href="#home">الرئيسية</a></li>
-            <li><a href="#about">عن المشروع</a></li>
-            <li><a href="#contact">تواصل</a></li>
-        </ul>
+        <div class="logo">MΛLΛK</div>
+        <div style="color: var(--gold-solid); font-size: 0.9rem;">إصدار خاص</div>
     </nav>
 
-    <header id="home">
-        <h1>إبداع لا حدود له</h1>
-        <p style="color: #64748b;">مشروع تطوير الويب - الجيل القادم</p>
+    <header>
+        <h1>رُقيّ وإبداع</h1>
+        <div class="gold-line"></div>
+        <p style="max-width: 600px; color: #bbb;">مساحة فنية تدمج بين التكنولوجيا ولمسات الأنوثة الفاخرة</p>
     </header>
 
-    <section id="about">
-        <div class="grid">
-            <div class="card"><h3>تأثير الـ CRT</h3><p>الموقع يفتح بتأثير تلفاز كلاسيكي مذهل.</p></div>
-            <div class="card"><h3>ماوس ذكي</h3><p>جرب تحريك الماوس وشاهد كيف يتفاعل مع العناصر.</p></div>
-            <div class="card"><h3>خلفية حية</h3><p>ألوان سديمية متحركة تعطي عمقاً للموقع.</p></div>
+    <section class="quotes-container">
+        <p id="quote-text">"الجمال يبدأ في اللحظة التي تقررين فيها أن تكوني نفسك."</p>
+        <button class="btn-gold" onclick="newQuote()">اقتباس جديد</button>
+    </section>
+
+    <button id="calc-btn" onclick="toggleCalc()">⚖️</button>
+
+    <div id="calc-modal">
+        <input type="text" id="display" class="calc-display" readonly>
+        <div class="calc-grid">
+            <button onclick="clearCalc()">C</button>
+            <button onclick="appendToCalc('/')">/</button>
+            <button onclick="appendToCalc('*')">×</button>
+            <button onclick="deleteCalc()">⌫</button>
+            <button onclick="appendToCalc('7')">7</button>
+            <button onclick="appendToCalc('8')">8</button>
+            <button onclick="appendToCalc('9')">9</button>
+            <button onclick="appendToCalc('-')">-</button>
+            <button onclick="appendToCalc('4')">4</button>
+            <button onclick="appendToCalc('5')">5</button>
+            <button onclick="appendToCalc('6')">6</button>
+            <button onclick="appendToCalc('+')">+</button>
+            <button onclick="appendToCalc('1')">1</button>
+            <button onclick="appendToCalc('2')">2</button>
+            <button onclick="appendToCalc('3')">3</button>
+            <button onclick="calculate()">=</button>
+            <button onclick="appendToCalc('0')" style="grid-column: span 2;">0</button>
+            <button onclick="appendToCalc('.')">.</button>
+            <button onclick="toggleCalc()" style="background: darkred;">إغلاق</button>
+        </div>
+    </div>
+
+    <section id="contact">
+        <div class="contact-box">
+            <h2 style="margin-bottom: 20px; font-family: 'Amiri', serif; color: var(--gold-solid);">تواصلِ معنا</h2>
+            <input type="text" placeholder="الاسم الكامل">
+            <input type="email" placeholder="البريد الإلكتروني">
+            <textarea rows="4" placeholder="اتركِ لمستكِ هنا..."></textarea>
+            <button class="btn-gold" style="width: 100%;">إرسال</button>
         </div>
     </section>
 
     <footer>
-        <p>تم البرمجة بواسطة فريق Vibe Code &copy; 2026</p>
+        DESIGNED FOR EXCELLENCE &copy; 2026
     </footer>
 
     <script>
-        // كود تحريك الماوس المضيء
+        // الماوس
         const cursor = document.getElementById('cursor');
         document.addEventListener('mousemove', e => {
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
         });
 
-        // تكبير الماوس عند الوقوف على الروابط
-        document.querySelectorAll('a, .card').forEach(item => {
-            item.addEventListener('mouseover', () => cursor.style.transform = 'scale(4)');
-            item.addEventListener('mouseleave', () => cursor.style.transform = 'scale(1)');
-        });
+        // قائمة الاقتباسات (أكثر من 50 اقتباس متنوع)
+        const quotes = [
+            "الجمال هو القوة، والابتسامة هي سيفها.",
+            "كوني كالنجمة، تلمع في أحلك الظروف.",
+            "الثقة بالنفس هي أجمل ثوب ترتديه المرأة.",
+            "الرقة ليست ضعفاً، بل هي قمة القوة.",
+            "اصنعي عالمك الخاص، ولا تنتظري أحداً ليرسمه لكِ.",
+            "الأناقة هي عندما يكون الداخل جميلاً كالخارج.",
+            "أنتِ قصيدة لم تُكتب بعد.",
+            "لا تقبلي بأقل مما تستحقين.",
+            "العقول العظيمة تتحدث عن الأفكار، والراقية تتحدث عن الأحلام.",
+            "كوني أنتِ، فالعالم يحتاج إلى النسخة الأصلية منكِ.",
+            "النجاح يليق بكِ جداً.",
+            "ابتسامتكِ هي سر جاذبيتكِ.",
+            "كوني قوية كالألماس، رقيقة كالورد.",
+            "الأحلام لا تشيخ أبداً.",
+            "كل يوم هو فرصة جديدة لتشرقي.",
+            "المرأة الذكية هي التي تحول العثرات إلى سلم للنجاح.",
+             "أنتِ قادرة على فعل المستحيل.",
+             "دائماً اجعلي سقف طموحاتكِ يعانق السماء.",
+             "الجمال الداخلي لا يذبل أبداً.",
+             "كوني بطلة قصتكِ الخاصة.",
+             "العالم يفسح الطريق لمن تعرف إلى أين تذهب."
+             // يمكنك إضافة المزيد هنا حتى تصل لـ 100!
+        ];
+
+        function newQuote() {
+            const rand = Math.floor(Math.random() * quotes.length);
+            document.getElementById('quote-text').innerText = `"${quotes[rand]}"`;
+        }
+
+        // الآلة الحاسبة
+        function toggleCalc() {
+            const modal = document.getElementById('calc-modal');
+            modal.style.display = modal.style.display === 'block' ? 'none' : 'block';
+        }
+
+        let calcDisplay = document.getElementById('display');
+        function appendToCalc(val) { calcDisplay.value += val; }
+        function clearCalc() { calcDisplay.value = ''; }
+        function deleteCalc() { calcDisplay.value = calcDisplay.value.slice(0, -1); }
+        function calculate() {
+            try { calcDisplay.value = eval(calcDisplay.value); }
+            catch { calcDisplay.value = 'خطأ'; }
+        }
+
+        // إضافة نجوم صغيرة في الخلفية
+        for(let i=0; i<50; i++) {
+            let dot = document.createElement('div');
+            dot.className = 'glow-dot';
+            dot.style.left = Math.random() * 100 + 'vw';
+            dot.style.top = Math.random() * 100 + 'vh';
+            dot.style.animationDelay = Math.random() * 5 + 's';
+            document.body.appendChild(dot);
+        }
     </script>
 </body>
 </html>

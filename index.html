@@ -1,138 +1,33 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إبداع ملاك | المحطة الرقمية</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+import turtle
+import colorsys
 
-        body {
-            background-color: #050505; /* أسود عميق */
-            color: #fff;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            overflow-x: hidden;
-        }
+# إعداد الشاشة
+screen = turtle.Screen()
+screen.setup(width=800, height=800)
+screen.bgcolor('black')  # خلفية سوداء لإبراز الألوان
+screen.title("لوحة فنية برمجية احترافية")
 
-        /* خلفية النيون المتحركة */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 50% 50%, #1a1a2e 0%, #050505 100%);
-            z-index: -1;
-        }
+# إعدادات الرسم
+t = turtle.Turtle()
+t.speed(0)  # أقصى سرعة
+t.width(2)
+t.hideturtle()
 
-        /* الهيدر الأنيق */
-        header {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
+# المتغيرات الأساسية للفن
+hue = 0.0
+n = 120  # عدد الأضلاع والتكرار
 
-        .hero-title {
-            font-size: clamp(3rem, 10vw, 6rem);
-            font-weight: 900;
-            background: linear-gradient(to right, #00f2fe, #4facfe);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 0 15px rgba(79, 172, 254, 0.5));
-            letter-spacing: -2px;
-        }
-
-        .sub-title {
-            font-size: 1.2rem;
-            color: #888;
-            margin-top: 20px;
-            letter-spacing: 5px;
-            text-transform: uppercase;
-        }
-
-        /* البطاقات الغامضة */
-        .container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            padding: 100px 10% ;
-        }
-
-        .dark-card {
-            background: #0a0a0a;
-            border: 1px solid #1a1a1a;
-            padding: 40px;
-            border-radius: 5px;
-            transition: 0.4s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .dark-card::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 2px;
-            background: #4facfe;
-            transform: translateX(-100%);
-            transition: 0.4s;
-        }
-
-        .dark-card:hover {
-            border-color: #4facfe;
-            background: #0f0f0f;
-            transform: translateY(-10px);
-        }
-
-        .dark-card:hover::after { transform: translateX(0); }
-
-        .dark-card h3 { color: #4facfe; margin-bottom: 15px; }
-
-        /* زر التواصل الغريب */
-        .contact-btn {
-            margin-top: 40px;
-            padding: 15px 40px;
-            background: transparent;
-            border: 1px solid #4facfe;
-            color: #4facfe;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
-            border-radius: 2px;
-            text-transform: uppercase;
-        }
-
-        .contact-btn:hover {
-            background: #4facfe;
-            color: #000;
-            box-shadow: 0 0 30px rgba(79, 172, 254, 0.6);
-        }
-
-    </style>
-</head>
-<body>
-
-    <header>
-        <div class="hero-title">مَـلَـك ميثم</div>
-        <div class="sub-title">IT Engineering Student</div>
-        <button class="contact-btn" onclick="location.href='#work'">اكتشف عالمي</button>
-    </header>
-
-    <div id="work" class="container">
-        <div class="dark-card">
-            <h3>المشروع الأول</h3>
-            <p>تطوير واجهات المستخدم بلمسة سينمائية وأكواد نظيفة.</p>
-        </div>
-        <div class="dark-card">
-            <h3>التعاون البرمجي</h3>
-            <p>بناء الأنظمة التشاركية عبر GitHub باحترافية عالية.</p>
-        </div>
-        <div class="dark-card">
-            <h3>تصميم الأنظمة</h3>
-            <p>حلول تقنية مبتكرة خارجة عن المألوف.</p>
-        </div>
-    </div>
+for i in range(300):
+    # تحويل نظام الألوان من HSV إلى RGB للحصول على تدرج احترافي
+    color = colorsys.hsv_to_rgb(hue, 1, 1)
+    t.pencolor(color)
+    hue += 0.005  # سرعة تغير اللون
     
-
-</body>
-</html>
+    # الرسم الهندسي غير المتوقع
+    t.forward(i * 2) 
+    t.right(121)    # زاوية الدوران هي السر في شكل الفن
+    t.circle(i, 80) # إضافة انحناءات لتعطي طابعاً فنياً
+    t.left(60)
+    
+# إنهاء الرسم عند النقر
+screen.exitonclick()

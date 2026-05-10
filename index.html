@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مشروع البرمجة الاحترافي</title>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;500;700&display=swap" rel="stylesheet">
+    <title>الموقع الاحترافي - خلفية تفاعلية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;500;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #6366f1;
-            --secondary-color: #a855f7;
-            --bg-dark: #0f172a;
-            --text-light: #f8fafc;
+            --primary-glow: #6366f1;
+            --secondary-glow: #ff00c8;
+            --bg-color: #05070a;
         }
 
         * {
@@ -21,20 +20,44 @@
             scroll-behavior: smooth;
         }
 
+        /* تأثير الخلفية المتحركة والمبهرة */
         body {
-            background-color: var(--bg-dark);
-            color: var(--text-light);
-            line-height: 1.6;
+            background-color: var(--bg-color);
+            color: #fff;
             overflow-x: hidden;
+            min-height: 100vh;
         }
 
-        /* خلفية متحركة بسيطة */
-        body::before {
-            content: "";
+        .animated-bg {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 50% 50%, #1e293b 0%, #0f172a 100%);
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             z-index: -1;
+            background: radial-gradient(circle at 50% 50%, #111827, #05070a);
+            overflow: hidden;
+        }
+
+        /* لمعات متحركة في الخلفية */
+        .light-blob {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: var(--primary-glow);
+            filter: blur(150px);
+            border-radius: 50%;
+            opacity: 0.15;
+            animation: move 20s infinite alternate;
+        }
+
+        .light-blob.second {
+            background: var(--secondary-glow);
+            animation: move 15s infinite alternate-reverse;
+            left: 50%;
+        }
+
+        @keyframes move {
+            from { transform: translate(-20%, -20%); }
+            to { transform: translate(40%, 40%); }
         }
 
         /* Navigation */
@@ -45,21 +68,18 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(15px);
+            background: rgba(255, 255, 255, 0.03);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             z-index: 1000;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
 
-        nav .logo { font-size: 1.5rem; font-weight: 700; color: var(--primary-color); }
+        .logo { font-size: 1.6rem; font-weight: 800; background: linear-gradient(45deg, #fff, var(--primary-glow)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
         nav ul { display: flex; list-style: none; }
-        nav ul li { margin-right: 30px; }
-        nav ul li a {
-            text-decoration: none; color: white;
-            font-weight: 500; transition: 0.3s;
-        }
-        nav ul li a:hover { color: var(--secondary-color); }
+        nav ul li { margin-right: 25px; }
+        nav ul li a { text-decoration: none; color: #ccc; font-weight: 500; transition: 0.4s; }
+        nav ul li a:hover { color: #fff; text-shadow: 0 0 10px var(--primary-glow); }
 
         /* Hero Section */
         header {
@@ -69,137 +89,139 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 0 20px;
         }
 
-        header h1 {
-            font-size: 4rem;
-            background: linear-gradient(to right, #818cf8, #d946ef);
+        .glitch-text {
+            font-size: 5rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            position: relative;
+            background: linear-gradient(to bottom, #fff, #666);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 20px;
+            animation: float 3s ease-in-out infinite;
         }
 
-        header p { font-size: 1.2rem; max-width: 600px; color: #94a3b8; }
-
-        /* Sections General */
-        section { padding: 100px 50px; min-height: 80vh; }
-        h2 { font-size: 2.5rem; text-align: center; margin-bottom: 50px; }
-
-        /* Grid Layout for "Services" or "Features" */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
         }
+
+        /* Glass Cards */
+        section { padding: 100px 8%; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
 
         .card {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             padding: 40px;
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: transform 0.3s ease;
-            text-align: center;
+            border-radius: 30px;
+            backdrop-filter: blur(10px);
+            transition: 0.5s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
         }
+
+        .card::before {
+            content: "";
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: 0.5s;
+        }
+
+        .card:hover::before { left: 100%; }
 
         .card:hover {
-            transform: translateY(-10px);
-            background: rgba(255, 255, 255, 0.1);
-            border-color: var(--primary-color);
+            transform: scale(1.05);
+            border-color: var(--primary-glow);
+            box-shadow: 0 0 30px rgba(99, 102, 241, 0.2);
         }
 
-        /* Contact Section */
-        .contact-form {
-            max-width: 600px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
+        /* Input Styles */
         input, textarea {
+            width: 100%;
             padding: 15px;
-            border-radius: 10px;
-            border: none;
-            background: #1e293b;
+            margin-bottom: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
             color: white;
             outline: none;
         }
 
-        button {
-            padding: 15px;
-            border-radius: 10px;
-            border: none;
-            background: var(--primary-color);
+        input:focus { border-color: var(--secondary-glow); }
+
+        .btn {
+            background: linear-gradient(45deg, var(--primary-glow), var(--secondary-glow));
             color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
             font-weight: bold;
             cursor: pointer;
-            transition: 0.3s;
+            box-shadow: 0 10px 20px rgba(255, 0, 200, 0.2);
         }
 
-        button:hover { background: var(--secondary-color); }
+        footer { text-align: center; padding: 50px; opacity: 0.6; }
 
-        footer { text-align: center; padding: 40px; border-top: 1px solid rgba(255,255,255,0.1); }
-
-        @media (max-width: 768px) {
-            header h1 { font-size: 2.5rem; }
-            nav { padding: 20px; }
-            nav ul { display: none; } /* لإبقاء الكود بسيطاً */
-        }
     </style>
 </head>
 <body>
 
+    <div class="animated-bg">
+        <div class="light-blob"></div>
+        <div class="light-blob second"></div>
+    </div>
+
     <nav>
-        <div class="logo">موقعي الإبداعي</div>
+        <div class="logo">VIBE CODE</div>
         <ul>
-            <li><a href="#home">الرئيسية</a></li>
-            <li><a href="#about">من نحن</a></li>
-            <li><a href="#services">خدماتنا</a></li>
-            <li><a href="#contact">اتصل بنا</a></li>
+            <li><a href="#home">البداية</a></li>
+            <li><a href="#services">المميزات</a></li>
+            <li><a href="#contact">تواصل</a></li>
         </ul>
     </nav>
 
     <header id="home">
-        <h1>مستقبل تطوير الويب</h1>
-        <p>هذا المشروع يجسد مفهوم الصفحة الواحدة الاحترافية باستخدام أحدث تقنيات التصميم.</p>
+        <h1 class="glitch-text">الإبداع الرقمي</h1>
+        <p style="color: #94a3b8; font-size: 1.2rem;">تجربة بصرية فريدة تجمع بين الأداء والجمال</p>
+        <br>
+        <a href="#services" class="btn" style="text-decoration: none;">اكتشف المزيد</a>
     </header>
 
-    <section id="about">
-        <h2>من نحن</h2>
-        <p style="text-align: center; max-width: 800px; margin: 0 auto;">نحن فريق نؤمن بأن البساطة هي قمة التعقيد. هذا الموقع تم تصميمه ليكون خفيفاً، سريعاً، وجذاباً بصرياً ليناسب معايير الويب الحديثة.</p>
-    </section>
-
     <section id="services">
-        <h2>خدماتنا</h2>
+        <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 50px;">لماذا موقعي مختلف؟</h2>
         <div class="grid">
             <div class="card">
-                <h3>تطوير الواجهات</h3>
-                <p>بناء واجهات مستخدم تفاعلية باستخدام HTML5 و CSS3.</p>
+                <h3>تصميم زجاجي</h3>
+                <p>استخدام تأثيرات الـ Glassmorphism التي تعطي لمسة عصرية وفخمة.</p>
             </div>
             <div class="card">
-                <h3>تجربة المستخدم</h3>
-                <p>تصميم رحلة مستخدم سلسة تضمن بقاء الزائر لفترة أطول.</p>
+                <h3>خلفية حيوية</h3>
+                <p>تفاعل بصري مستمر مع لمعات متحركة تجذب انتباه الزائر فوراً.</p>
             </div>
             <div class="card">
-                <h3>الأداء العالي</h3>
-                <p>مواقع سريعة جداً ومتوافقة مع محركات البحث.</p>
+                <h3>سرعة البرق</h3>
+                <p>كود نظيف ومرتب يضمن تحميل الصفحة في أجزاء من الثانية.</p>
             </div>
         </div>
     </section>
 
     <section id="contact">
-        <h2>تواصل معي</h2>
-        <form class="contact-form">
-            <input type="text" placeholder="الاسم الكامل">
-            <input type="email" placeholder="البريد الإلكتروني">
-            <textarea rows="5" placeholder="رسالتك هنا..."></textarea>
-            <button type="button">إرسال الرسالة</button>
-        </form>
+        <div class="card" style="max-width: 600px; margin: 0 auto;">
+            <h2 style="margin-bottom: 20px; text-align: center;">أرسل رسالة</h2>
+            <input type="text" placeholder="اسمك">
+            <input type="email" placeholder="بريدك الإلكتروني">
+            <textarea rows="4" placeholder="كيف يمكنني مساعدتك؟"></textarea>
+            <button class="btn" style="width: 100%;">إرسال الآن</button>
+        </div>
     </section>
 
     <footer>
-        <p>تم التطوير بكل شغف &copy; 2026</p>
+        <p>تم التصميم بواسطة Vibe Code Team &copy; 2026</p>
     </footer>
 
 </body>

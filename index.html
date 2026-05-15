@@ -3,206 +3,194 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Malak Myth | Tech Portfolio</title>
+    <title>Malak Myth | Academic Portfolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;700&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
+        * { box-sizing: border-box; }
         :root {
             --primary: #00d4ff;
-            --bg-dark: #0a0a0a;
-            --card-bg: #111111;
-            --text-color: #e0e0e0;
+            --bg-dark: #050505;
+            --card-bg: rgba(20, 20, 20, 0.9);
+            --text: #e0e0e0;
         }
 
-        body {
-            background-color: var(--bg-dark);
-            color: var(--text-color);
-            font-family: 'Noto Sans Arabic', sans-serif;
+        body, html {
             margin: 0;
             padding: 0;
-            scroll-behavior: smooth;
+            background-color: var(--bg-dark);
+            color: var(--text);
+            font-family: 'Noto Sans Arabic', sans-serif;
+            scroll-snap-type: y mandatory; /* لجعل السكرول يقف عند كل سلايد */
+            overflow-x: hidden;
         }
 
-        /* Hero Section مع خلفية الحاسبات */
-        header {
+        /* تنسيق السلايد الواحد */
+        section {
             height: 100vh;
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
-                        url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&q=80&w=1350');
-            background-size: cover;
-            background-position: center;
+            width: 100vw;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            scroll-snap-align: start;
+            position: relative;
+            padding: 40px;
             text-align: center;
+            border-bottom: 1px solid #111;
         }
 
-        .hero-title {
-            font-size: 5rem;
-            color: var(--primary);
-            text-shadow: 0 0 20px var(--primary);
-            margin: 0;
+        /* خلفية الصفحة الأولى مع صورة الحاسبات */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), 
+                        url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&q=80&w=1350');
+            background-size: cover;
+            background-position: center;
         }
 
-        .hero-subtitle {
-            font-size: 1.5rem;
-            margin-top: 10px;
-            color: #888;
-        }
+        h1 { font-size: 4.5rem; color: var(--primary); margin: 0; text-shadow: 0 0 15px var(--primary); }
+        h2 { font-size: 2.8rem; color: var(--primary); margin-bottom: 30px; }
+        p { font-size: 1.3rem; max-width: 800px; line-height: 1.8; color: #bbb; }
 
-        /* القسم الأكاديمي - مستوحى من الملازم */
-        .section {
-            padding: 80px 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        h2 {
-            font-size: 2.5rem;
-            color: var(--primary);
-            border-right: 5px solid var(--primary);
-            padding-right: 15px;
-            margin-bottom: 40px;
-        }
-
+        /* الكروت التقنية */
         .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            width: 100%;
+            max-width: 1200px;
         }
 
         .card {
             background: var(--card-bg);
             padding: 30px;
-            border-radius: 15px;
-            border: 1px solid #333;
+            border-radius: 20px;
+            border: 1px solid #222;
+            flex: 1;
+            min-width: 300px;
             transition: 0.3s;
         }
+        .card:hover { border-color: var(--primary); transform: translateY(-10px); }
+        .card i { font-size: 3rem; color: var(--primary); margin-bottom: 20px; }
 
-        .card:hover {
-            border-color: var(--primary);
-            transform: translateY(-10px);
-        }
+        /* جداول الملازم */
+        .table-container { width: 90%; max-width: 1000px; overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; background: #0a0a0a; border-radius: 10px; overflow: hidden; }
+        th, td { padding: 20px; border: 1px solid #222; text-align: center; }
+        th { background: #111; color: var(--primary); font-size: 1.2rem; }
 
-        .card i {
-            font-size: 2.5rem;
-            color: var(--primary);
-            margin-bottom: 20px;
-        }
-
-        /* جدول مقارنة MBR و GPT */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            background: #0f0f0f;
-        }
-
-        th, td {
-            padding: 15px;
-            border: 1px solid #333;
-            text-align: center;
-        }
-
-        th { background: #1a1a1a; color: var(--primary); }
-
-        /* صفحة التواصل وزر الحاسبة */
-        .contact-footer {
-            text-align: center;
-            padding: 60px;
-            background: #050505;
-        }
-
-        .btn-calc {
+        /* زر الحاسبة */
+        .calc-btn {
             background: transparent;
             border: 2px solid #39ff14;
             color: #39ff14;
             padding: 15px 40px;
-            border-radius: 10px;
-            font-size: 1.2rem;
+            border-radius: 50px;
+            font-size: 1.3rem;
             cursor: pointer;
             transition: 0.3s;
-            text-decoration: none;
-            display: inline-block;
+            font-weight: bold;
+            margin-top: 30px;
+        }
+        .calc-btn:hover { background: #39ff14; color: #000; box-shadow: 0 0 20px #39ff14; }
+
+        /* الأقسام الجانبية (نص + صورة) */
+        .split-slide {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            padding: 0;
+            text-align: right;
+        }
+        .text-side { padding: 60px; display: flex; flex-direction: column; justify-content: center; }
+        .image-side { 
+            background-size: cover; 
+            background-position: center; 
+            height: 100%;
+            border-right: 2px solid var(--primary);
         }
 
-        .btn-calc:hover {
-            background: #39ff14;
-            color: #000;
+        .scroll-down {
+            position: absolute;
+            bottom: 20px;
+            animation: bounce 2s infinite;
+            color: var(--primary);
+            font-size: 2rem;
         }
+        @keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateY(0);} 40% {transform: translateY(-10px);} 60% {transform: translateY(-5px);} }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1 class="hero-title">Malak Myth | Tech</h1>
-        <p class="hero-subtitle">طالبة هندسة تكنولوجيا المعلومات - جامعة كربلاء</p>
-        <a href="#projects" class="btn-calc" style="margin-top: 30px; border-color: var(--primary); color: var(--primary);">مشاهدة المشاريع</a>
-    </header>
+    <section class="hero">
+        <h1>Malak Myth | Tech</h1>
+        <p>طالبة هندسة تكنولوجيا المعلومات - جامعة كربلاء</p>
+        <div class="scroll-down"><i class="fa-solid fa-chevron-down"></i></div>
+    </section>
 
-    <section id="projects" class="section">
-        <h2>المشاريع التقنية (مستوحاة من الملازم)</h2>
-        <div class="grid">
-            <div class="card">
-                <i class="fa-solid fa-hard-drive"></i>
-                <h3>مخططات التقسيم (GPT)</h3>
-                <p>بناءً على الملزمة 7.1.2: نظام GPT يدعم أقراصاً تصل إلى 18 إكسابايت ويستخدم CRC32 لضمان سلامة البيانات.</p>
-            </div>
-            <div class="card">
-                <i class="fa-solid fa-microchip"></i>
-                <h3>تطور Firmware (UEFI)</h3>
-                <p>دراسة واجهة UEFI الحديثة التي تدعم الـ Secure Boot والواجهات الرسومية المتطورة[cite: 61, 67].</p>
-            </div>
-            <div class="card">
-                <i class="fa-solid fa-terminal"></i>
-                <h3>أتمتة Batch Files</h3>
-                <p>تصميم برامج أتمتة باستخدام ملفات .bat لتنفيذ العمليات المتكررة وتوفير الوقت[cite: 476, 491].</p>
-            </div>
+    <section>
+        <h2>مستودع المشاريع الأكاديمية</h2>
+        <p>هذا الموقع يلخص أهم المهارات المختبرية التي تمت دراستها في مادة تنظيم الحاسوب وإدارة النظم، مع التركيز على التقنيات الحديثة في تخزين البيانات[cite: 49, 161, 586].</p>
+    </section>
+
+    <section class="split-slide">
+        <div class="image-side" style="background-image: url('https://images.unsplash.com/photo-1597733336794-12d05021d510?auto=format&fit=crop&q=80&w=1000');"></div>
+        <div class="text-side">
+            <h2>مخططات التقسيم: GPT</h2>
+            <p>بناءً على الملزمة (7.1.2 GPT)، يتميز هذا النظام بدعم أقراص تصل إلى 18 إكسابايت ويستخدم تقنية CRC32 لضمان سلامة البيانات وحمايتها من التلف[cite: 2, 6, 10, 11].</p>
+            <ul style="color: var(--primary); font-size: 1.2rem;">
+                <li>دعم حتى 128 بارتيشن [cite: 9]</li>
+                <li>نسخة احتياطية للـ Header [cite: 12]</li>
+                <li>توافقية عالية مع الأنظمة الحديثة [cite: 4, 14]</li>
+            </ul>
         </div>
     </section>
 
-    <section class="section">
-        <h2>مقارنة الأنظمة (MBR vs GPT)</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>الميزة</th>
-                    <th>نظام MBR</th>
-                    <th>نظام GPT (الحديث)</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>عدد البارتيشنز</td>
-                    <td>4 Primary فقط [cite: 1]</td>
-                    <td>يصل إلى 128 بارتيشن [cite: 9]</td>
-                </tr>
-                <tr>
-                    <td>حجم القرص</td>
-                    <td>حتى 2 تيرابايت [cite: 58]</td>
-                    <td>حتى 18 إكسابايت [cite: 6]</td>
-                </tr>
-                <tr>
-                    <td>الأمان</td>
-                    <td>محدود</td>
-                    <td>نسخة احتياطية (Backup Header) [cite: 12]</td>
-                </tr>
-            </tbody>
-        </table>
+    <section>
+        <h2>مقارنة NTFS و FAT32</h2>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>الميزة [cite: 32]</th>
+                        <th>NTFS (الحديث) [cite: 32]</th>
+                        <th>FAT32 (القديم) [cite: 32]</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>حجم الملف الأقصى</td>
+                        <td>16 تيرابايت [cite: 364]</td>
+                        <td>4 جيجابايت فقط [cite: 364]</td>
+                    </tr>
+                    <tr>
+                        <td>الأمان [cite: 36]</td>
+                        <td>عالي جداً (صلاحيات كاملة) [cite: 36]</td>
+                        <td>محدود [cite: 365]</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </section>
 
-    <footer class="contact-footer">
+    <section style="background: #000;">
         <h2>تواصلِ معي</h2>
-        <p>ملاك ميثم جابر | هندسة تكنولوجيا المعلومات</p>
-        <div style="margin: 20px 0;">
-            <a href="#" style="color: var(--primary); margin: 0 15px; font-size: 1.5rem;"><i class="fa-brands fa-github"></i></a>
-            <a href="#" style="color: var(--primary); margin: 0 15px; font-size: 1.5rem;"><i class="fa-solid fa-envelope"></i></a>
+        <p>ملاك ميثم جابر | مطورة ومبرمجّة نظم</p>
+        <div class="grid" style="margin-top: 30px;">
+            <div class="card" style="min-width: 150px; padding: 20px;">
+                <i class="fa-brands fa-github"></i>
+                <p>GitHub</p>
+            </div>
+            <div class="card" style="min-width: 150px; padding: 20px;">
+                <i class="fa-solid fa-envelope"></i>
+                <p>Email</p>
+            </div>
         </div>
-        <button class="btn-calc" onclick="alert('جاري تشغيل الحاسبة البرمجية...')">
+        <button class="calc-btn" onclick="alert('جاري تشغيل الحاسبة التقنية...')">
             <i class="fa-solid fa-calculator"></i> تشغيل الحاسبة التقنية
         </button>
-    </footer>
+    </section>
 
 </body>
 </html>
